@@ -1,0 +1,14 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block content %}
+<p>Are you sure to delete this post</p>
+<img src="{{post.image.url}}" alt="" width="300">
+<p>{{post.caption}}</p>
+
+<form action="" method="post">
+        {% csrf_token %}
+        <button type="submit">Yes Delete</button>
+</form>
+
+<a href="{% url 'home' %}">Cancel</a>
+{% endblock content %}

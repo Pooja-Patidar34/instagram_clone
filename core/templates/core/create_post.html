@@ -1,0 +1,32 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="container mt-5" style="max-width: 600px;">
+          <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white text-center">
+                              <h3 class="mb-0">Create Post</h3>
+                    </div>
+                    <div class="card-body">
+                              <form method="post" enctype="multipart/form-data">
+                                        {% csrf_token %}
+
+                                        <div class="mb-3">
+                                                  {{ form.image.label_tag }}
+                                                  {{ form.image }}
+                                        </div>
+
+                                        <div class="mb-3">
+                                                  {{ form.caption.label_tag }}
+                                                  {{ form.caption }}
+                                        </div>
+
+                                        <div class="d-grid">
+                                                  <button type="submit" class="btn btn-primary">Post</button>
+                                        </div>
+                              </form>
+                    </div>
+          </div>
+</div>
+
+{% endblock %}

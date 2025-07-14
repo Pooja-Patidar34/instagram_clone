@@ -1,0 +1,40 @@
+{% extends "core/base.html" %}
+{% block content %}
+<div class="container mt-4">
+          <h2>{{ user_obj.username }}'s Profile</h2>
+
+          {% if user_obj.profile.profile_pic %}
+          <img src="{{ user_obj.profile.profile_pic.url }}" alt="Profile Picture" width="100" height="100"
+                    style="border-radius: 50%;">
+          {% endif %}
+
+          <p>{{ user_obj.profile.bio }}</p>
+          <p>
+                    <a href="{% url 'followers_list' user_obj.username %}"><strong>{{ followers_count }}</strong>
+                              Followers</a> |
+                    <a href="{% url 'following_list' user_obj.username %}"><strong>{{ following_count }}</strong>
+                              Following</a>
+          </p>
+
+
+          {% if request.user != user_obj %}
+          {% if is_following %}
+          <a href="{% url 'unfollow_user' user_obj.username %}" class="btn btn-sm btn-outline-danger">Unfollow</a>
+          {% else %}
+          <a href="{% url 'follow_user' user_obj.username %}" class="btn btn-sm btn-outline-success">Follow</a>
+          {% endif %}
+          {% endif %}
+
+          <hr>
+          <h3>Posts</h3>
+          {% for post in posts %}
+          <div style="margin-bottom: 20px;">
+                    <img src="{{ post.image.url }}" alt="Post Image" width="300"><br>
+                    <p>{{ post.caption }}</p>
+                    <p><small>{{ post.created_at }}</small></p>
+          </div>
+          {% empty %}
+          <p>No posts yet</p>
+          {% endfor %}
+</div>
+{% endblock %}

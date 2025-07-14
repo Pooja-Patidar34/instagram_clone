@@ -1,0 +1,19 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block content %}
+{% if notifications %}
+  <ul>
+          {% for n in notifications  %}
+            <li>
+                    <strong>{{n.seder.username}}</strong> : {{n.text}}
+                     <br>
+                     <small>{{n.created_at|timesince}} ago</small>
+            </li>
+          {% endfor %}
+          
+  </ul>
+  {% else %}
+  <p>No notifications yet..</p>
+{% endif %}
+<a href="{% url 'home' %}">Back to Feed</a>
+{% endblock content %}

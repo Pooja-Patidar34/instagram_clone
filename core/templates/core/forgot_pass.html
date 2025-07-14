@@ -1,0 +1,42 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block content %}
+<div class="bg-image p-5 text-center shadow-1-strong rounded mb-5 text-white" style="background-image: url('{% static "core/img/insta1.jpg" %}'); height: 800px; background-size: cover; background-position: center;">
+          <div class="container mt-5" style="max-width: 450px;">
+                    <div class="card shadow-sm">
+                              <div class="card-header bg-primary text-white text-center">
+                                        <h3 class="mb-0">Forgot</h3>
+                              </div>
+                    
+                              <div class="card-body">
+                                        <form method="post">
+                                                  {% csrf_token %}
+                                                  {% if messages %}
+                              {% for message in messages  %}
+                              <div class="alert alert-info">
+                                        {{message}}
+                              </div>
+                                
+                              {% endfor %}
+                              {% endif %}
+                                                  <div class="mb-3">
+                                                            <label for="username" class="form-label">Username</label>
+                                                            <input type="text" name="username" id="username"
+                                                                      class="form-control" placeholder="Enter username"
+                                                                      required>
+                                                  </div>
+
+
+                                                  <div class="d-grid mb-2">
+                                                            <button type="submit"
+                                                                      class="btn btn-primary">Submit</button>
+                                                  </div>
+                                        </form>
+
+                              </div>
+                    </div>
+          </div>
+</div>
+</div>
+
+{% endblock content %}
