@@ -49,7 +49,6 @@ def signup_view(request):
         Profile.objects.get_or_create(user=user)
         login(request, user)
         return redirect('home')
-
     return render(request, 'core/signup.html')
 
 def login_view(request):
@@ -67,6 +66,7 @@ def login_view(request):
 def logout_view(request):
         logout(request)
         return redirect('login')
+
 @login_required
 def edit_profile(request):
           profile=request.user.profile
@@ -77,7 +77,8 @@ def edit_profile(request):
                         return redirect('home')
           else:
                 form=ProfileForm(instance=profile)    
-          return render(request,'core/edit.html',{'form':form})  
+          return render(request,'core/edit.html',{'form':form}) 
+ 
 @login_required
 def create_post(request):
     if request.method == 'POST':
@@ -89,7 +90,6 @@ def create_post(request):
             return redirect('home')
     else:
         form = PostForm()
-
     return render(request, 'core/create_post.html', {'form': form})
 
 @login_required
@@ -114,7 +114,6 @@ def like_post(request, post_id):
                 'type': 'like'
             }
         )
-
     return redirect(request.META.get('HTTP_REFERER', 'home'))
 
 
@@ -125,7 +124,6 @@ def comment_post(request, post_id):
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
-            
             comment = form.save(commit=False)
             comment.user = request.user
             comment.post = post
@@ -140,14 +138,13 @@ def comment_post(request, post_id):
                     type='comment',
                     text=f"{request.user.username} commented on your post"
                 )
-
                 # WebSocket real-time notification
                 notify_via_ws(post.user.id, {
                     'text': f"{request.user.username} commented on your post",
                     'type': 'comment'
                 })
-
         return redirect('home')
+    
 @login_required
 def user_profile(request, username):
     user_obj = get_object_or_404(User, username=username)
